@@ -25,22 +25,22 @@ def input_students
 end
 
 def print_header
-    puts "The students of my cohort at Makers Academy"
-    puts "-----------"
+    puts "The students of my cohort at Makers Academy".center(100)
+    puts "-----------".center(100)
 end
   
 def print(students)
     counter = 0
     until counter == students.size
-    puts "#{counter + 1}. #{students[counter][:name]} (#{students[counter][:cohort]} cohort)"
-    puts "Addtional info:"
-    puts "Hobbies: #{students[counter][:hobbies]}, Country: #{students[counter][:country]}, and height: #{students[counter][:height]}"
+    puts "#{counter + 1}. #{students[counter][:name]} (#{students[counter][:cohort]} cohort)".center(100)
+    puts "Addtional info:".center(100)
+    puts "Hobbies: #{students[counter][:hobbies]}, Country of birth: #{students[counter][:country]}, height: #{students[counter][:height]}".center(100)
     counter += 1
     end
 end
 
 def print_footer(students)
-    puts "Overall, we have #{students.count} great students"
+    puts "Overall, we have #{students.count} great students".center(100)
 end
 # nothing happens until we call the methods
 students = input_students
