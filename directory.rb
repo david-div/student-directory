@@ -23,10 +23,9 @@ def print_header
 end
   
 def print(students)
-    puts "Which starting letter are you looking for?"
-    first_letter = gets.chomp.upcase
-    students.each_with_index do |student, index|
-        puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)" if student[:name].start_with?(first_letter)
+        puts "Students with less than 12 characters in their name:"
+        students.each_with_index do |student, index|
+        puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)" if student[:name].size < 12
     end
 end
 
