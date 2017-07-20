@@ -18,7 +18,7 @@ def input_students
         height  = gets.chomp
         # add the students hash to the array
         students << {name: name, cohort: cohort.to_sym, hobbies: hobbies, country: country, height: height}  # adding the hash to the array, with nov cohort
-        puts "Now we have #{students.count} students" # count on the array
+        puts "Now we have #{students.count} #{students.count == 1 ? "student" : "students"}" # count on the array
         # get another name from the user
         puts "Next name please:"
         name = gets.chomp
@@ -40,7 +40,7 @@ def print(students)
     puts "Hobbies: #{students[counter][:hobbies]}, Country of birth: #{students[counter][:country]}, height: #{students[counter][:height]}".center(100)
     counter += 1
     end
-    puts "\nStudents by cohort: "
+    puts "Students by cohort: ".center(100)
     
     cohort_sort = students.sort_by {|hash| hash[:cohort]}
     cohort_sort.each do |cohort_sort| 
@@ -50,7 +50,7 @@ def print(students)
 end
 
 def print_footer(students)
-    puts "Overall, we have #{students.count} great students".center(100)
+    puts "Overall, we have #{students.count} #{students.count == 1 ? "student" : "students"}".center(100)
 end
 
 
