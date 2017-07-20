@@ -11,17 +11,17 @@ def input_students
         cohort = gets.gsub(/\n/,"")
         cohort = 'november'if cohort == ""
         puts "Have any hobbies?"
-        hobbies = gets.chomp
+        hobbies = gets.gsub(/\n/,"")
         puts "Country of birth?"
-        country = gets.chomp
+        country = gets.gsub(/\n/,"")
         puts "Height?"
-        height  = gets.chomp
+        height  = gets.gsub(/\n/,"")
         # add the students hash to the array
         students << {name: name, cohort: cohort.to_sym, hobbies: hobbies, country: country, height: height}  # adding the hash to the array, with nov cohort
         puts "Now we have #{students.count} #{students.count == 1 ? "student" : "students"}" # count on the array
         # get another name from the user
         puts "Next name please:"
-        name = gets.chomp
+        name = gets.gsub(/\n/,"")
     end
     # return the array of students
     students
@@ -44,7 +44,7 @@ def print(students)
     
     cohort_sort = students.sort_by {|hash| hash[:cohort]}
     cohort_sort.each do |cohort_sort| 
-        puts "#{cohort_sort[:cohort]}, #{cohort_sort[:name]}".center(100)
+        puts "#{cohort_sort[:cohort]}: #{cohort_sort[:name]}".center(100)
      end
 
 end
