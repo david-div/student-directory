@@ -7,6 +7,9 @@ def input_students
     # while the name is not emplty, repeat this code
     name = gets.chomp
     while !name.empty? do # as they have to press enter twice to stop it
+        puts "What cohort are they in?"
+        cohort = gets.gsub(/\n/,"")
+        cohort = 'november'if cohort == ""
         puts "Have any hobbies?"
         hobbies = gets.chomp
         puts "Country of birth?"
@@ -14,7 +17,7 @@ def input_students
         puts "Height?"
         height  = gets.chomp
         # add the students hash to the array
-        students << {name: name, cohort: :november, hobbies: hobbies, country: country, height: height}  # adding the hash to the array, with nov cohort
+        students << {name: name, cohort: cohort.to_sym, hobbies: hobbies, country: country, height: height}  # adding the hash to the array, with nov cohort
         puts "Now we have #{students.count} students" # count on the array
         # get another name from the user
         puts "Next name please:"
@@ -43,7 +46,8 @@ def print_footer(students)
     puts "Overall, we have #{students.count} great students".center(100)
 end
 # nothing happens until we call the methods
-students = input_students
+
+students = input_students    # calling the method input_students and putting the results in sudent
 print_header
 print(students)
 print_footer(students)
