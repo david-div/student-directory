@@ -40,15 +40,23 @@ def print(students)
     puts "Hobbies: #{students[counter][:hobbies]}, Country of birth: #{students[counter][:country]}, height: #{students[counter][:height]}".center(100)
     counter += 1
     end
+    puts "\nStudents by cohort: "
+    
+    cohort_sort = students.sort_by {|hash| hash[:cohort]}
+    cohort_sort.each do |cohort_sort| 
+        puts "#{cohort_sort[:cohort]}, #{cohort_sort[:name]}".center(100)
+     end
+
 end
 
 def print_footer(students)
     puts "Overall, we have #{students.count} great students".center(100)
 end
+
+
 # nothing happens until we call the methods
 
 students = input_students    # calling the method input_students and putting the results in sudent
 print_header
 print(students)
 print_footer(students)
-
