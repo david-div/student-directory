@@ -33,6 +33,9 @@ def print_header
 end
   
 def print(students)
+    
+    if students.size > 0
+    
     counter = 0
     until counter == students.size
     puts "#{counter + 1}. #{students[counter][:name]} (#{students[counter][:cohort]} cohort)".center(100)
@@ -49,14 +52,20 @@ def print(students)
 
 end
 
+end
+
 def print_footer(students)
+    if students.count > 0
     puts "Overall, we have #{students.count} #{students.count == 1 ? "student" : "students"}".center(100)
+    else
+    puts " No students yets ".center(100, "~")
+end
 end
 
 
 # nothing happens until we call the methods
 
-students = input_students    # calling the method input_students and putting the results in sudent
+students = input_students    # calling the method input_students and putting the results in sudents
 print_header
 print(students)
 print_footer(students)
