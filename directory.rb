@@ -72,6 +72,7 @@ end
 def print_menu
         puts "1. Input the students"
         puts "2. Show the students"
+        puts "3. Save the list to students.csv"
         puts "9. Exit"
 end
 
@@ -85,12 +86,25 @@ def process(selection)
         case selection
           when "1" then input_students # calling the method input students
           when "2" then show_students
+          when "3" then save_students
           when "9" then  exit  # this will cause the program to terminate
           else           puts "I don't know what you meant, try again"
         end
 
 end
-    
+
+def save_students
+    # open the file for writing
+    file = File.open("students.csv", "w")  # opening the file in write mode
+    # iterate over the array of students
+    @students.each do |student|
+        student_data = [student[:name], student[:cohort]] # creating an array
+        csv_line = student_data.join(", ")   # and changing it to a string, to be able to puts
+        file.puts csv_line    # puting cvs_line to the file, rather than the screen
+    end
+    file.close
+end
+        
 
 # nothing happens until we call the methods
 
