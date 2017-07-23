@@ -87,31 +87,27 @@ def save_students
     # open the file for writing
     filename = STDIN.gets.gsub(/\n/,"")
     filename = "students.csv" if filename == ""
-    file = File.open(filename, "w")  # opening the file in write mode
+    File.open(filename, "w") do |file| # opening the file in write mode
     # iterate over the array of students
     @students.each do |student|
         student_data = [student[:name], student[:cohort]] # creating an array
         csv_line = student_data.join(",")   # and changing it to a string, to be able to puts
         file.puts csv_line    # puting cvs_line to the file, rather than the screen
     end
-    file.close
+end
     puts "The file has been saved to #{filename}"
 end
 
 def load_students(filename = "students.csv") # will default if nothing is entered
     filename = STDIN.gets.gsub(/\n/,"")
-    filename = "students.csv" if filename == ""
+    filename = "students.csv" if filename == "" # filename didn't default when this wasn't in?
     
-    file = File.open(filename, "r") # read mode 
-    file.readlines.each do |line|         # readlines # IO (in/output class)
+    File.open(filename, "r") do |file|             
+    file.readlines.each do |line|               # readlines # IO (in/output class)
     name, cohort = line.chomp.split(',')
         student_array(name, cohort)
-    # chomp the trialing new line, "parallel assignment", assigning 2 variables
-    # at the same time. If an array, the first var will get this first value of 
-    # the array, the second var, the second etc.
-    # then puitting into a new Hash
     end
-    file.close
+    end
     puts "#{filename} has succesfully been loaded"
 end
 
