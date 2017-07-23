@@ -1,13 +1,9 @@
-@students = [] # an empty array accessible to all methods
 require "csv"
+@students = [] # an empty array accessible to all methods
 
 def input_students
     puts "Please enter the names of the students"
     puts "To finish, just hit return twice"
-    # create an empty array
-    # students = []  # no longer needed as @students
-    # get the first name
-    # while the name is not emplty, repeat this code
     name = STDIN.gets.chomp
     while !name.empty? do # as they have to press enter twice to stop it
         puts "What cohort are they in?"
@@ -93,16 +89,7 @@ def save_students
         @students.each do |student|
             csv << [student[:name], student[:cohort]]
         end
-    
-    # File.open(filename, "w") do |file| # opening the file in write mode
-    # iterate over the array of students
-    # @students.each do |student|
-    #    student_data = [student[:name], student[:cohort]] # creating an array
-    #    csv_line = student_data.join(",")   # and changing it to a string, to be able to puts
-    #    file.puts csv_line    # puting cvs_line to the file, rather than the screen
-    # end
-    
-end
+    end
     puts "The file has been saved to #{filename}"
 end
 
@@ -139,10 +126,7 @@ def student_or_students
     @students.count == 1 ? "student" : "students"
 end
 
-
 try_load_students
 interactive_menu
 
 
-
-# "path/to/file.csv"
