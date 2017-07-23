@@ -100,6 +100,8 @@ end
 
 def load_students(filename = "students.csv") # will default if nothing is entered
     filename = STDIN.gets.gsub(/\n/,"")
+    filename = "students.csv" if filename == ""
+    
     file = File.open(filename, "r") # read mode 
     file.readlines.each do |line|         # readlines # IO (in/output class)
     name, cohort = line.chomp.split(',')
