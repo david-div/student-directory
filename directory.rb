@@ -7,23 +7,23 @@ def input_students
     # students = []  # no longer needed as @students
     # get the first name
     # while the name is not emplty, repeat this code
-    name = gets.chomp
+    name = STDIN.gets.chomp
     while !name.empty? do # as they have to press enter twice to stop it
         puts "What cohort are they in?"
-        cohort = gets.gsub(/\n/,"")
+        cohort = STDIN.gets.gsub(/\n/,"")
         cohort = 'November'if cohort == ""
         puts "Have any hobbies?"
-        hobbies = gets.gsub(/\n/,"")
+        hobbies = STDIN.gets.gsub(/\n/,"")
         puts "Country of birth?"
-        country = gets.gsub(/\n/,"")
+        country = STDIN.gets.gsub(/\n/,"")
         puts "Height?"
-        height  = gets.gsub(/\n/,"")
+        height  = STDIN.gets.gsub(/\n/,"")
         # add the students hash to the array
         @students << {name: name, cohort: cohort.capitalize.to_sym, hobbies: hobbies, country: country, height: height}  # adding the hash to the array, with nov cohort
         puts "Now we have #{@students.count} #{@students.count == 1 ? "student" : "students"}" # count on the array
         # get another name from the user
         puts "Next name please:"
-        name = gets.gsub(/\n/,"")
+        name = STDIN.gets.gsub(/\n/,"")
     end
 end
 
@@ -65,7 +65,7 @@ end
 def interactive_menu
     loop do
         print_menu
-        process(gets.chomp)  # passing gets.chomp as an arguement for the method
+        process(STDIN.gets.chomp)  # passing gets.chomp as an arguement for the method
     end
 end
 
@@ -107,8 +107,8 @@ def save_students
     file.close
 end
 
-def load_students
-    file = File.open("students.csv", "r") # read mode 
+def load_students(filename = "students.csv") # will default if nothing is entered
+    file = File.open(filename, "r") # read mode 
     file.readlines.each do |line|         # readlines # IO (in/output class)
     name, cohort = line.chomp.split(',')
         @students << {name: name, cohort: cohort.to_sym}
@@ -118,8 +118,22 @@ def load_students
     # then puitting into a new Hash
     end                                    
     file.close
-
 end
 
+def try_load_students
+    filename = ARGV.first     # first arguement from the command line
+    return if filename.nil?   # returning to this point anf that's it for the method i.e. stopping here
+    if File.exists?(filename) # if it exists
+        load_students(filename)
+         puts "Loaded #{@students.count} from #{filename}" # the amount of students
+     else # if it doesn't exist
+        puts "Sorry, #{filename} doesn't exist."
+        exit # quits the program
+    end
+end
+        
+
+
 # nothing happens until we call the methods
+try_load_students
 interactive_menu
