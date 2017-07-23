@@ -61,8 +61,8 @@ end
 def print_menu
         puts "1. Input the students"
         puts "2. Show the students"
-        puts "3. Save the list to students.csv"
-        puts "4. Load the list from students.csv"
+        puts "3. Save the list to a file name: (default students.csv if nothing enterered)"
+        puts "4. Load the list from file name: (default students.csv if nothing enterered)"
         puts "9. Exit"
 end
 
@@ -85,8 +85,9 @@ end
 
 def save_students
     # open the file for writing
-    file_name = "students.csv"
-    file = File.open(file_name, "w")  # opening the file in write mode
+    filename = STDIN.gets.gsub(/\n/,"")
+    filename = "students.csv" if filename == ""
+    file = File.open(filename, "w")  # opening the file in write mode
     # iterate over the array of students
     @students.each do |student|
         student_data = [student[:name], student[:cohort]] # creating an array
@@ -94,10 +95,11 @@ def save_students
         file.puts csv_line    # puting cvs_line to the file, rather than the screen
     end
     file.close
-    puts "The file has been saved to #{file_name}"
+    puts "The file has been saved to #{filename}"
 end
 
 def load_students(filename = "students.csv") # will default if nothing is entered
+    filename = STDIN.gets.gsub(/\n/,"")
     file = File.open(filename, "r") # read mode 
     file.readlines.each do |line|         # readlines # IO (in/output class)
     name, cohort = line.chomp.split(',')
