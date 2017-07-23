@@ -12,14 +12,8 @@ def input_students
         puts "What cohort are they in?"
         cohort = STDIN.gets.gsub(/\n/,"")
         cohort = 'November'if cohort == ""
-        puts "Have any hobbies?"
-        hobbies = STDIN.gets.gsub(/\n/,"")
-        puts "Country of birth?"
-        country = STDIN.gets.gsub(/\n/,"")
-        puts "Height?"
-        height  = STDIN.gets.gsub(/\n/,"")
         # add the students hash to the array
-        @students << {name: name, cohort: cohort.capitalize.to_sym, hobbies: hobbies, country: country, height: height}  # adding the hash to the array, with nov cohort
+        student_array(name, cohort)
         puts "Now we have #{@students.count} #{@students.count == 1 ? "student" : "students"}" # count on the array
         # get another name from the user
         puts "Next name please:"
@@ -39,8 +33,6 @@ def print_students_list(students)
     counter = 0
     until counter == @students.size
     puts "#{counter + 1}. #{@students[counter][:name]} (#{@students[counter][:cohort]} cohort)".center(100)
-    puts "Addtional info:".center(100)
-    puts "Hobbies: #{@students[counter][:hobbies]}, Country of birth: #{@students[counter][:country]}, Height: #{@students[counter][:height]}".center(100)
     counter += 1
     end
     puts "Students by cohort: ".center(100)
@@ -111,7 +103,7 @@ def load_students(filename = "students.csv") # will default if nothing is entere
     file = File.open(filename, "r") # read mode 
     file.readlines.each do |line|         # readlines # IO (in/output class)
     name, cohort = line.chomp.split(',')
-        @students << {name: name, cohort: cohort.to_sym}
+        student_array(name, cohort)
     # chomp the trialing new line, "parallel assignment", assigning 2 variables
     # at the same time. If an array, the first var will get this first value of 
     # the array, the second var, the second etc.
@@ -130,6 +122,10 @@ def try_load_students
         puts "Sorry, #{filename} doesn't exist."
         exit # quits the program
     end
+end
+
+def student_array(name, cohort)
+    @students << {name: name, cohort: cohort.to_sym}
 end
         
 
