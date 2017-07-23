@@ -74,18 +74,19 @@ end
 
 def process(selection)
         case selection
-          when "1" then input_students # calling the method input students
-          when "2" then show_students
-          when "3" then save_students
-          when "4" then load_students
-          when "9" then  exit  # this will cause the program to terminate
+          when "1" then input_students
+          when "2" then show_students  
+          when "3" then save_students 
+          when "4" then load_students    
+          when "9" then  exit 
           else           puts "I don't know what you meant, try again"
         end
 end
 
 def save_students
     # open the file for writing
-    file = File.open("students.csv", "w")  # opening the file in write mode
+    file_name = "students.csv"
+    file = File.open(file_name, "w")  # opening the file in write mode
     # iterate over the array of students
     @students.each do |student|
         student_data = [student[:name], student[:cohort]] # creating an array
@@ -93,6 +94,7 @@ def save_students
         file.puts csv_line    # puting cvs_line to the file, rather than the screen
     end
     file.close
+    puts "The file has been saved to #{file_name}"
 end
 
 def load_students(filename = "students.csv") # will default if nothing is entered
@@ -104,8 +106,9 @@ def load_students(filename = "students.csv") # will default if nothing is entere
     # at the same time. If an array, the first var will get this first value of 
     # the array, the second var, the second etc.
     # then puitting into a new Hash
-    end                                    
+    end
     file.close
+    puts "#{filename} has succesfully been loaded"
 end
 
 def try_load_students
