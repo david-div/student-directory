@@ -14,8 +14,7 @@ def input_students
         cohort = 'November'if cohort == ""
         # add the students hash to the array
         student_array(name, cohort)
-        puts "Now we have #{@students.count} #{@students.count == 1 ? "student" : "students"}" # count on the array
-        # get another name from the user
+        puts "Now we have #{@students.count} #{student_or_students}" # count on the array
         puts "Next name please:"
         name = STDIN.gets.gsub(/\n/,"")
     end
@@ -41,17 +40,15 @@ def print_students_list(students)
     cohort_sort.each do |cohort_sort| 
         puts "#{cohort_sort[:cohort]}: #{cohort_sort[:name]}".center(100)
      end
-
-end
-
+    end
 end
 
 def print_footer(students)
     if @students.count > 0
-    puts "Overall, we have #{@students.count} #{@students.count == 1 ? "student" : "students"}".center(100)
+    puts "Overall, we have #{@students.count} #{student_or_students}".center(100)
     else
     puts " No students yets ".center(100, "~")
-end
+    end
 end
 
 def interactive_menu
@@ -84,7 +81,6 @@ def process(selection)
           when "9" then  exit  # this will cause the program to terminate
           else           puts "I don't know what you meant, try again"
         end
-
 end
 
 def save_students
@@ -114,7 +110,8 @@ end
 
 def try_load_students
     filename = ARGV.first     # first arguement from the command line
-    filename = "students.csv" if filename.nil?
+    # filename = "students.csv" 
+    return if filename.nil?
     if File.exists?(filename) # if it exists
         load_students(filename)
          puts "Loaded #{@students.count} from #{filename}" # the amount of students
@@ -127,9 +124,10 @@ end
 def student_array(name, cohort)
     @students << {name: name, cohort: cohort.to_sym}
 end
-        
 
+def student_or_students
+    @students.count == 1 ? "student" : "students"
+end
 
-# nothing happens until we call the methods
 try_load_students
 interactive_menu
