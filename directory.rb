@@ -1,4 +1,5 @@
 @students = [] # an empty array accessible to all methods
+require "csv"
 
 def input_students
     puts "Please enter the names of the students"
@@ -87,13 +88,20 @@ def save_students
     # open the file for writing
     filename = STDIN.gets.gsub(/\n/,"")
     filename = "students.csv" if filename == ""
-    File.open(filename, "w") do |file| # opening the file in write mode
+    
+    CSV.open(filename, "w") do |csv|
+        @students.each do |student|
+            csv << [student[:name], student[:cohort]]
+        end
+    
+    # File.open(filename, "w") do |file| # opening the file in write mode
     # iterate over the array of students
-    @students.each do |student|
-        student_data = [student[:name], student[:cohort]] # creating an array
-        csv_line = student_data.join(",")   # and changing it to a string, to be able to puts
-        file.puts csv_line    # puting cvs_line to the file, rather than the screen
-    end
+    # @students.each do |student|
+    #    student_data = [student[:name], student[:cohort]] # creating an array
+    #    csv_line = student_data.join(",")   # and changing it to a string, to be able to puts
+    #    file.puts csv_line    # puting cvs_line to the file, rather than the screen
+    # end
+    
 end
     puts "The file has been saved to #{filename}"
 end
@@ -102,22 +110,21 @@ def load_students(filename = "students.csv") # will default if nothing is entere
     filename = STDIN.gets.gsub(/\n/,"")
     filename = "students.csv" if filename == "" # filename didn't default when this wasn't in?
     
-    File.open(filename, "r") do |file|             
-    file.readlines.each do |line|               # readlines # IO (in/output class)
-    name, cohort = line.chomp.split(',')
-        student_array(name, cohort)
+    CSV.foreach(filename) do |row|
+    name, cohort = row[0], row[1]
+    student_array(name, cohort)     # able to do student_array(row[0], row[1]) but this reads better
     end
-    end
+
     puts "#{filename} has succesfully been loaded"
 end
 
 def try_load_students
     filename = ARGV.first     # first arguement from the command line
-    # filename = "students.csv" 
+#   filename = "students.csv" # will default, although you have to press enter
     return if filename.nil?
     if File.exists?(filename) # if it exists
         load_students(filename)
-         puts "Loaded #{@students.count} from #{filename}" # the amount of students
+        puts "Loaded #{@students.count} from #{filename}" # the amount of students
      else # if it doesn't exist
         puts "Sorry, #{filename} doesn't exist."
         exit # quits the program
@@ -132,5 +139,10 @@ def student_or_students
     @students.count == 1 ? "student" : "students"
 end
 
+
 try_load_students
 interactive_menu
+
+
+
+# "path/to/file.csv"
